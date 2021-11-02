@@ -3,7 +3,6 @@ filetype off                  " required
 
 filetype plugin indent on    " required
 
-syntax enable
 
 au BufNewFile,BufRead *.py
 	\ set colorcolumn=80 |
@@ -54,16 +53,17 @@ nnoremap <Left> :vertical resize -5<CR>
 nnoremap <Right> :vertical resize +5<CR>
 nnoremap <Down> :resize -5<CR>
 nnoremap <Up> :resize +5<CR>
-nmap <Leader>t :TagbarToggle<CR>
-nmap <Leader>f :NERDTreeToggle<CR>
+nmap <space>t :TagbarToggle<CR>
+nmap <space>f :NERDTreeToggle<CR>
+"nmap <Leader>f :Vexplore!<CR>
 
 "Plugins""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'tpope/vim-surround'
 Plug 'gmarik/Vundle.vim'
 Plug 'posva/vim-vue'
-Plug 'nathanaelkane/vim-indent-guides'
 Plug 'bagrat/vim-workspace'
 Plug 'itchyny/lightline.vim'
 Plug 'mxw/vim-jsx'
@@ -72,11 +72,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'pangloss/vim-javascript'
 Plug 'vim-syntastic/syntastic'
 Plug 'morhetz/gruvbox'
-Plug 'davidhalter/jedi-vim'
 Plug 'sts10/vim-pink-moon'
 Plug 'nvie/vim-flake8'
-Plug 'tpope/vim-fugitive'
-Plug 'junegunn/goyo.vim'
 Plug 'tmsvg/pear-tree'
 Plug 'majutsushi/tagbar'
 Plug 'leafOfTree/vim-vue-plugin'
@@ -100,6 +97,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'mcchrish/nnn.vim'
 Plug 'beanworks/vim-phpfmt'
+Plug 'Olical/conjure', {'tag': 'v4.24.1'}
+Plug 'hashivim/vim-terraform'
+Plug 'jceb/vim-orgmode'
 
 call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -117,28 +117,34 @@ set encoding=utf-8
 set runtimepath^=~/.vim/bundle/node
 set runtimepath^=~/.vim/bundle/node
 set virtualedit+=onemore
-set spell
+set title
 
 let g:phpfmt_autosave = 0
 let g:NERDTreeDirArrows=0
 let NERDTreeShowHidden=1
-let python_highlight_all=1
+let NERDTreeWinPos=1
 let g:jsx_ext_required = 0 " Allow JSX in normal JS files
-let g:go_def_mode='gocode'
-let g:go_info_mode='gocode'
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 let g:go_fmt_command = "goimports"    
 let g:go_auto_type_info = 1           
 let g:NERDTreeWinSize=40
-let g:gruvbox_contrast = 'hard'
-let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
+let g:gruvbox_contrast_dark = 'hard'
+let g:tagbar_left=1
+let g:tagbar_phpctags_bin='~/.local/bin/phpctags'
+let g:tagbar_phpctags_memory_limit = '512M'
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_operators = 1
+let g:tagbar_ctags_bin = "/usr/local/bin/ctags"
 let g:lightline = {
      \ 'colorscheme': 'gruvbox',
      \ }
 colorscheme gruvbox
 
-highlight LineNr ctermfg=black
-
-au VimEnter * NERDTree
 
 let g:tagbar_type_go = {
 	\ 'ctagstype' : 'go',
@@ -187,8 +193,9 @@ let g:tagbar_type_typescript = {
   \ 'sort' : 0                                                                    
 \ }                                                                               
 
-autocmd Filetype php setlocal tabstop=4 shiftwidth=4 softtabstop=0 expandtab smarttab
-autocmd Filetype typescript setlocal tabstop=2 shiftwidth=2 softtabstop=0 expandtab smarttab
+autocmd Filetype php setlocal tabstop=4 shiftwidth=4 softtabstop=0 expandtab smarttab colorcolumn=80,120
+autocmd Filetype markdown setlocal tabstop=2 shiftwidth=2
+autocmd Filetype typescript setlocal tabstop=2 shiftwidth=2 softtabstop=0 smarttab
 autocmd Filetype scss setlocal tabstop=4 shiftwidth=2 softtabstop=0 expandtab smarttab
 autocmd Filetype twig setlocal tabstop=4 shiftwidth=2 softtabstop=0 expandtab smarttab
 autocmd Filetype javascript setlocal tabstop=4 shiftwidth=2 softtabstop=0 expandtab smarttab
@@ -209,3 +216,10 @@ au filetype go inoremap <buffer> . .<C-x><C-o>
 
 filetype plugin indent on
 highlight LineNr ctermfg=grey ctermbg=black
+
+augroup skeletons
+  au!
+  autocmd BufNewFile *.* silent! execute '0r ~/.vim/templates/skeleton.'.expand("<afile>:e")
+augroup END
+
+hi Normal guibg=NONE ctermbg=NONE
