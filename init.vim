@@ -1,3 +1,10 @@
+let data_dir = '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source ~/.nvimrc
+endif
+
+
 call plug#begin('~/.vim/plugged')
 source ~/.nvimrc
 
@@ -23,3 +30,4 @@ require'nvim-treesitter.configs'.setup {
 EOF
 
 syntax enable
+source ~/.nvimrc
