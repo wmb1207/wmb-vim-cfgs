@@ -1,12 +1,3 @@
-set rtp +=~/.vim
-
-let data_dir = '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source ~/.nvimrc
-endif
-
-
 call plug#begin('~/.vim/plugged')
 source ~/.nvimrc
 
@@ -21,7 +12,7 @@ require'nvim-treesitter.configs'.setup {
   ignore_install = { "javascript" }, -- List of parsers to ignore installing
   highlight = {
     enable = true,              -- false will disable the whole extension
-    disable = { "c", "rust" },  -- list of language that will be disabled
+    disable = { "c" },  -- list of language that will be disabled
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
     -- Using this option may slow down your editor, and you may see some duplicate highlights.

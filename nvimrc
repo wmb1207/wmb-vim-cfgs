@@ -44,7 +44,7 @@ nnoremap .<space> :GOVIMSuggestedFixes<CR>
 nnoremap .d :GOVIMGoToDef<CR>
 nnoremap .D :GOVIMGoToPrevDef<CR>
 nnoremap .i :GOVIMImplements<CR>
-nnoremap <space>p :FZF<CR>
+nnoremap <space><space> :FZF<CR>
 nnoremap <space>b :Buffers<CR>
 nnoremap <space>gf :GFiles?<CR>
 nnoremap <space>w :Windows<CR>
@@ -54,7 +54,8 @@ nnoremap <Right> :vertical resize +5<CR>
 nnoremap <Down> :resize -5<CR>
 nnoremap <Up> :resize +5<CR>
 nmap <space>t :TagbarToggle<CR>
-nmap <space>f :NERDTreeToggle<CR>
+nmap <space>pf :NERDTreeToggle<CR>
+nmap <space>* :Rg<CR>
 "nmap <Leader>f :Vexplore!<CR>
 
 "Plugins""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -100,6 +101,7 @@ Plug 'beanworks/vim-phpfmt'
 Plug 'Olical/conjure', {'tag': 'v4.24.1'}
 Plug 'hashivim/vim-terraform'
 Plug 'jceb/vim-orgmode'
+Plug 'jparise/vim-graphql'
 
 call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
