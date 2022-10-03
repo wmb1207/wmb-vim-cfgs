@@ -1,0 +1,5 @@
+require("wmb.set")
+require("wmb.packer")
+require("wmb.remap")
+require("wmb.treesitter")
+require("wmb.lsp")
